@@ -18,6 +18,7 @@
 #' @param margin iteration stoping creteria
 #' @param verbosity print current iteraction number
 #' @param compute.likelihood whether compute likelihood in each step
+#' @param method chose from method "FixedPoint","EM" and "L1"
 #' @return returns the estimated coefficients, estimated hyper-parameters, number of iterations and likelihood scores by Automated Relevance Determination (ARD).
 #' @examples
 #' set.seed(99)
@@ -34,14 +35,12 @@
 #' ARD.fit = ARD(x_train,y_train)
 #' 1-get_mse(x_test%*%ARD_fit$coef,y_test)/var(y_test)
 
-
-
 ARD<-function(X,Y,sigma.square = estimateVariance(X,Y),
               sigma.square.init = as.numeric(var(Y)),
               gamma.init = rep(1,ncol(X)), eta.init=rep(1,ncol(X)),
               threshold_eta = 10000,maxstep = 1000,margin=0.001,verbosity = 1,
               compute.likelihood = TRUE,method = "FixedPoint"){
-        if (method == "Reweighted_l1"){
+        if (method == "L1"){
                 result<-Reweighted_l1.ARD(X,Y,sigma.square=sigma.square,gamma.init=gamma.init,maxstep=maxstep,margin=margin,verbosity = verbosity,compute.likelihood=compute.likelihood)
                 return(list(coefficients = result$coef,hyper_param = 1/result$gamma,sigma.square = sigma.square,n_iters = result$n_iter,likelihood.score = result$likelihood.score))
         }

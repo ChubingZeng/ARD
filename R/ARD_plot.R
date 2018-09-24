@@ -7,7 +7,7 @@
 #' plot.ARD(ARD.result)
 
 plot.ARD <- function(ARD.result){
-        df = data.frame(cbind(1:ARD.result$n_iter,ARD.result$likelihood.score))
+        df = data.frame(cbind(1:length(ARD.result$likelihood.score),ARD.result$likelihood.score))
         p.likelihood<-ggplot(data=df, aes(x=X1, y=X2,group=1)) +
                 geom_line(color="blue")+
                 geom_point(size = 0.2)+
